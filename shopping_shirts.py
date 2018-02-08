@@ -36,7 +36,6 @@ def login(email, password, login_button, email_field, password_field, submit_but
         check_shopping()
 
 
-
 def logout(change_user, logout_button):
     print('Logging out...')
     WebDriverWait(browser, 25).until(EC.presence_of_element_located((By.ID, change_user)))
