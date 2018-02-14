@@ -1,3 +1,4 @@
+import random
 import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -7,11 +8,13 @@ import os
 
 login = False
 count = 0
-timer = 30
+searches_to_make = 55
+custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
 chrome = webdriver.Chrome()
 chrome.get(server)
+currenturl = (chrome.current_url)
 
 
 def auto_search(search):
@@ -22,17 +25,23 @@ def auto_search(search):
     chrome.find_element_by_id('sb_form_q').submit()
 
 
-while login == False:
-    list = open('list.csv', 'r')
+if custom_list == True:
+    try:
+        list = open('words.txt', 'r')
+    except:
+        list = open('list.txt', 'r')
     list = list.read()
     search_list = list.split('\n')
-    time.sleep(30)
-    login = True
 
 
-for search in search_list:
-#    url = chrome.getLocation()
-#    print(url)
-    auto_search(search)
-    time.sleep(2)
+while currenturl != 'https://www.bing.com/?wlexpsignin=1':
+    currenturl = str(chrome.current_url)
+else:
+#    for search in search_list:
+    while count < searches_to_make:
+        search = random.choice(search_list)
+        auto_search(search)
+        time.sleep(2)
+        count += 1
+    print('Your ' + str(searches_to_make) + ' random searches are done.')
 
