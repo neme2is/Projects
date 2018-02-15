@@ -19,7 +19,7 @@ from selenium import webdriver
 
 
 count = 0
-searches_to_make = 55
+searches_to_make = 3
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
@@ -53,4 +53,6 @@ else:
         auto_search(search)
         time.sleep(2)
         count += 1
-    print('Your ' + str(searches_to_make) + ' random searches are done.')
+    print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing browser in 10 seconds.')
+    time.sleep(10)
+    chrome.close()
