@@ -22,16 +22,16 @@ from selenium import webdriver
 mobile_emulation = { "deviceName": "Nexus 6P" }
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
-chrome = webdriver.Chrome(chrome_options=chrome_options).get('https://www.bing.com')
+#chrome = webdriver.Chrome(chrome_options=chrome_options)
 
 count = 0
 searches_to_make = input('How many searches do you want to run? ')
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
+chrome = webdriver.Chrome(chrome_options=chrome_options)
 chrome.get(server)
 currenturl = (chrome.current_url)
-
 
 def auto_search(search_word):
     print('Searching for ' + search)
@@ -39,6 +39,7 @@ def auto_search(search_word):
     chrome.find_element_by_id('sb_form_q').click()
     chrome.find_element_by_id('sb_form_q').send_keys(search_word)
     chrome.find_element_by_id('sb_form_q').submit()
+
 
 if custom_list == True:
     try:
