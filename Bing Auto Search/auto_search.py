@@ -40,7 +40,8 @@ if custom_list == True:
     try:
         list = open('words.txt', 'r')
     except:
-        list = open('list.txt', 'r')
+        print('File not found for search list: "words.txt"')
+        quit()
     list = list.read()
     search_list = list.split('\n')
 
