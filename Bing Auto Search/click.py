@@ -18,7 +18,6 @@ import time
 from selenium import webdriver
 
 
-login = False
 count = 0
 searches_to_make = 55
 custom_list = True
@@ -29,11 +28,11 @@ chrome.get(server)
 currenturl = (chrome.current_url)
 
 
-def auto_search(search):
+def auto_search(search_word):
     print('Searching for ' + search)
     chrome.find_element_by_id('sb_form_q').clear()
     chrome.find_element_by_id('sb_form_q').click()
-    chrome.find_element_by_id('sb_form_q').send_keys(search)
+    chrome.find_element_by_id('sb_form_q').send_keys(search_word)
     chrome.find_element_by_id('sb_form_q').submit()
 
 
