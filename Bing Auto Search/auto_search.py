@@ -19,7 +19,7 @@ from selenium import webdriver
 
 
 count = 0
-searches_to_make = 55
+searches_to_make = input('How many searches do you want to run? ')
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
