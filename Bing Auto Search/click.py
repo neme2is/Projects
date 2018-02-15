@@ -1,10 +1,22 @@
+########################################################################
+# This will automatically complete as many random searches
+# that you specify in "searches_to_make" using a custom list
+# which pulls words from the text file (words.txt or list.txt)
+# if "custom_list = True". Otherwise it will run a search with
+# whatever is in "search_list".
+#
+# Make sure to list how many searches you want ot make.
+# the default is set to 55 which should be enough for Bing Rewards.
+#
+# When the page first loads you will need to click sign in and once you
+# have entered your credentials you will be taken back to the search
+# page and the script will being to auto search.
+########################################################################
+
 import random
 import time
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import requests
-import os
+
 
 login = False
 count = 0
@@ -37,11 +49,9 @@ if custom_list == True:
 while currenturl != 'https://www.bing.com/?wlexpsignin=1':
     currenturl = str(chrome.current_url)
 else:
-#    for search in search_list:
     while count < searches_to_make:
         search = random.choice(search_list)
         auto_search(search)
         time.sleep(2)
         count += 1
     print('Your ' + str(searches_to_make) + ' random searches are done.')
-
