@@ -24,7 +24,7 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
 #chrome = webdriver.Chrome(chrome_options=chrome_options)
 
-count = 0
+count = 1
 searches_to_make = input('How many searches do you want to run? ')
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
@@ -34,7 +34,8 @@ chrome.get(server)
 currenturl = (chrome.current_url)
 
 def auto_search(search_word):
-    print('Searching for ' + search)
+    print('(' + str(count) + ')' + ' Searching for ' + search)
+    #print('Searching for ' + search)
     chrome.find_element_by_id('sb_form_q').clear()
     chrome.find_element_by_id('sb_form_q').click()
     chrome.find_element_by_id('sb_form_q').send_keys(search_word)
@@ -54,7 +55,7 @@ if custom_list == True:
 while currenturl != 'https://www.bing.com/?wlexpsignin=1':
     currenturl = str(chrome.current_url)
 else:
-    while count < searches_to_make:
+    while count <= searches_to_make:
         search = random.choice(search_list)
         auto_search(search)
         time.sleep(2)
