@@ -24,7 +24,9 @@ searches_to_make = 30
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
-chrome = webdriver.Chrome()
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('start-maximized')
+chrome = webdriver.Chrome(chrome_options=chrome_options)
 chrome.get(server)
 currenturl = (chrome.current_url)
 
