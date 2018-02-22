@@ -25,7 +25,8 @@ chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
 #chrome = webdriver.Chrome(chrome_options=chrome_options)
 
 count = 1
-searches_to_make = input('How many searches do you want to run? ')
+#searches_to_make = input('How many searches do you want to run? ')
+searches_to_make = 20
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
