@@ -35,7 +35,6 @@ currenturl = (chrome.current_url)
 
 def auto_search(search_word):
     print('(' + str(count) + ')' + ' Searching for ' + search)
-    #print('Searching for ' + search)
     chrome.find_element_by_id('sb_form_q').clear()
     chrome.find_element_by_id('sb_form_q').click()
     chrome.find_element_by_id('sb_form_q').send_keys(search_word)
