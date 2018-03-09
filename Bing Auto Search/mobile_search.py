@@ -34,6 +34,8 @@ chrome = webdriver.Chrome(chrome_options=chrome_options)
 chrome.get(server)
 currenturl = (chrome.current_url)
 
+
+
 def auto_search(search_word):
     print('(' + str(count) + ')' + ' Searching for ' + search)
     chrome.find_element_by_id('sb_form_q').clear()
