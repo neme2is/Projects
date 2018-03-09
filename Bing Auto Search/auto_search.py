@@ -24,20 +24,23 @@ searches_to_make = 30
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
-#chrome_options = webdriver.ChromeOptions()
-#chrome_options.add_argument('start-maximized')
-#chrome = webdriver.Chrome()
-#chrome.get(server)
+
 currenturl = server
 
 # chrome options for mobile device emulation
-def mobile_browser():
+def browser(type):
     global server, chrome
-    mobile_emulation = { "deviceName": "Nexus 6P" }
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
-    chrome = webdriver.Chrome(chrome_options=chrome_options)
-    chrome.get(server)
+    if 'desktop' == type:
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('start-maximized')
+        chrome = webdriver.Chrome()
+        chrome.get(server)
+    elif 'mobile' == type:
+        mobile_emulation = { "deviceName": "Nexus 6P" }
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+        chrome = webdriver.Chrome(chrome_options=chrome_options)
+        chrome.get(server)
     return chrome
 
 def login(verison):
@@ -47,7 +50,11 @@ def login(verison):
         chrome.find_element_by_css_selector('#i0116').send_keys('michael.gavidia@gmail.com')
         chrome.find_element_by_css_selector('#idSIButton9').click()
     elif 'mobile' == verison:
-        chrome.find_element_by_css_selector('#mHamburger').click()
+        try:
+            chrome.find_element_by_css_selector('#mHamburger').click()
+        except:
+            chrome.find_element_by_css_selector('#bnp_close_link > img').click()
+            chrome.find_element_by_css_selector('#mHamburger').click()
         time.sleep(1)
         chrome.find_element_by_css_selector('#hb_s').click()
         time.sleep(1)
@@ -88,8 +95,15 @@ def check_url():
         time.sleep(10)
         chrome.quit()
 
-mobile_browser()
+
 create_list()
+browser('desktop')
+time.sleep(2)
+login('desktop')
+check_url()
+
+browser('mobile')
+time.sleep(3)
 login('mobile')
 check_url()
 
