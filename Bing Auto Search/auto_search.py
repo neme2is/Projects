@@ -28,46 +28,52 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('start-maximized')
 chrome = webdriver.Chrome(chrome_options=chrome_options)
 chrome.get(server)
-currenturl = (chrome.current_url)
+currenturl = server
 time.sleep(2)
 
 def login():
     chrome.find_element_by_css_selector('#id_a').click()
-    time.sleep(2)
+    time.sleep(1)
     chrome.find_element_by_css_selector('#i0116').send_keys('michael.gavidia@gmail.com')
     chrome.find_element_by_css_selector('#idSIButton9').click()
 
 
 def auto_search(search_word):
-    print('(' + str(count) + ')' + ' Searching for ' + search)
+    print('(' + str(count) + ')' + ' Searching for ' + search_word)
     chrome.find_element_by_id('sb_form_q').clear()
     chrome.find_element_by_id('sb_form_q').click()
     chrome.find_element_by_id('sb_form_q').send_keys(search_word)
     chrome.find_element_by_id('sb_form_q').submit()
 
+
+def create_list():
+    global search_list
+    if custom_list == True:
+        try:
+            list = open('words.txt', 'r')
+        except:
+            print('File not found for search list: "words.txt"')
+            quit()
+        list = list.read()
+        search_list = list.split('\n')
+
+
+def check_url():
+    global currenturl, count, search_list
+    while currenturl != 'https://www.bing.com/?wlexpsignin=1':
+        currenturl = chrome.current_url
+    else:
+        while count <= searches_to_make:
+            search = random.choice(search_list)
+            auto_search(search)
+            time.sleep(2)
+            count += 1
+        print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing the browser automatically in 10 seconds.')
+        time.sleep(10)
+        chrome.quit()
+
+
+create_list()
 login()
-
-if custom_list == True:
-    try:
-        list = open('words.txt', 'r')
-    except:
-        print('File not found for search list: "words.txt"')
-        quit()
-    list = list.read()
-    search_list = list.split('\n')
-
-
-while currenturl != 'https://www.bing.com/?wlexpsignin=1':
-    currenturl = str(chrome.current_url)
-else:
-    while count <= searches_to_make:
-        search = random.choice(search_list)
-        auto_search(search)
-        time.sleep(2)
-        count += 1
-    print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing the browser automatically in 10 seconds.')
-    time.sleep(10)
-    chrome.quit()
-
-
+check_url()
 
