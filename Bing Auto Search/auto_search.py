@@ -29,6 +29,13 @@ chrome_options.add_argument('start-maximized')
 chrome = webdriver.Chrome(chrome_options=chrome_options)
 chrome.get(server)
 currenturl = (chrome.current_url)
+time.sleep(2)
+
+def login():
+    chrome.find_element_by_css_selector('#id_a').click()
+    time.sleep(2)
+    chrome.find_element_by_css_selector('#i0116').send_keys('michael.gavidia@gmail.com')
+    chrome.find_element_by_css_selector('#idSIButton9').click()
 
 
 def auto_search(search_word):
@@ -38,6 +45,7 @@ def auto_search(search_word):
     chrome.find_element_by_id('sb_form_q').send_keys(search_word)
     chrome.find_element_by_id('sb_form_q').submit()
 
+login()
 
 if custom_list == True:
     try:
@@ -60,3 +68,6 @@ else:
     print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing the browser automatically in 10 seconds.')
     time.sleep(10)
     chrome.quit()
+
+
+
