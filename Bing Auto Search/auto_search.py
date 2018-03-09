@@ -24,19 +24,35 @@ searches_to_make = 30
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('start-maximized')
-chrome = webdriver.Chrome(chrome_options=chrome_options)
-chrome.get(server)
+#chrome_options = webdriver.ChromeOptions()
+#chrome_options.add_argument('start-maximized')
+#chrome = webdriver.Chrome()
+#chrome.get(server)
 currenturl = server
-time.sleep(2)
 
-def login():
-    chrome.find_element_by_css_selector('#id_a').click()
-    time.sleep(1)
-    chrome.find_element_by_css_selector('#i0116').send_keys('michael.gavidia@gmail.com')
-    chrome.find_element_by_css_selector('#idSIButton9').click()
+# chrome options for mobile device emulation
+def mobile_browser():
+    global server, chrome
+    mobile_emulation = { "deviceName": "Nexus 6P" }
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    chrome = webdriver.Chrome(chrome_options=chrome_options)
+    chrome.get(server)
+    return chrome
 
+def login(verison):
+    if 'desktop' == verison:
+        chrome.find_element_by_css_selector('#id_a').click()
+        time.sleep(1)
+        chrome.find_element_by_css_selector('#i0116').send_keys('michael.gavidia@gmail.com')
+        chrome.find_element_by_css_selector('#idSIButton9').click()
+    elif 'mobile' == verison:
+        chrome.find_element_by_css_selector('#mHamburger').click()
+        time.sleep(1)
+        chrome.find_element_by_css_selector('#hb_s').click()
+        time.sleep(1)
+        chrome.find_element_by_css_selector('#i0116').send_keys('michael.gavidia@gmail.com')
+        chrome.find_element_by_css_selector('#idSIButton9').click()
 
 def auto_search(search_word):
     print('(' + str(count) + ')' + ' Searching for ' + search_word)
@@ -72,8 +88,8 @@ def check_url():
         time.sleep(10)
         chrome.quit()
 
-
+mobile_browser()
 create_list()
-login()
+login('mobile')
 check_url()
 
