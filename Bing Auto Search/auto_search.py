@@ -43,6 +43,22 @@ def browser(type):
         chrome.get(server)
     return chrome
 
+def edge():
+    global server, chrome, count
+    chrome = webdriver.Edge()
+    chrome.get(server)
+    #count = 1
+    while count <= searches_to_make:
+        search = random.choice(search_list)
+        auto_search(search)
+        time.sleep(2)
+        count += 1
+    print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing the browser automatically in 10 seconds.')
+    time.sleep(10)
+    chrome.quit()
+    #count = 0
+
+
 def login(verison):
     if 'desktop' == verison:
         chrome.find_element_by_css_selector('#id_a').click()
@@ -94,13 +110,17 @@ def check_url():
         print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing the browser automatically in 10 seconds.')
         time.sleep(10)
         chrome.quit()
+        count = 0
+        currenturl = ''
 
 
 create_list()
-browser('desktop')
-time.sleep(2)
-login('desktop')
-check_url()
+edge()
+
+#browser('desktop')
+#time.sleep(2)
+#login('desktop')
+#check_url()
 
 browser('mobile')
 time.sleep(3)
