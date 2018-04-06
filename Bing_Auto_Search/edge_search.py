@@ -16,14 +16,17 @@
 import random
 import time
 from selenium import webdriver
-
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 count = 1
 #searches_to_make = input('How many searches do you want to run? ')
-searches_to_make = 30
+searches_to_make = 35
 custom_list = True
 search_list = ['playstation', 'nintendo', 'xbox', 'switch', 'nintendo switch']
 server = 'https://www.bing.com'
+
 
 currenturl = server
 
@@ -34,7 +37,8 @@ def browser(type):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('start-maximized')
         chrome = webdriver.Chrome()
-        chrome.get(server)
+        #chrome.get(server)
+        chrome.get('https://login.live.com/')
     elif 'mobile' == type:
         mobile_emulation = { "deviceName": "Nexus 6P" }
         chrome_options = webdriver.ChromeOptions()
@@ -47,7 +51,6 @@ def edge():
     global server, chrome, count
     chrome = webdriver.Edge()
     chrome.get(server)
-    #count = 1
     while count <= searches_to_make:
         search = random.choice(search_list)
         auto_search(search)
@@ -61,10 +64,12 @@ def edge():
 
 def login(verison):
     if 'desktop' == verison:
-        chrome.find_element_by_css_selector('#id_a').click()
-        time.sleep(1)
+        wait = WebDriverWait(chrome, 10)
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '#i0116')))
         chrome.find_element_by_css_selector('#i0116').send_keys('michael.gavidia@gmail.com')
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '#idSIButton9')))
         chrome.find_element_by_css_selector('#idSIButton9').click()
+        wait.until(EC.url_contains('account'))
     elif 'mobile' == verison:
         try:
             chrome.find_element_by_css_selector('#mHamburger').click()
@@ -98,32 +103,28 @@ def create_list():
 
 
 def check_url():
-    global currenturl, count, search_list
-    while currenturl != 'https://www.bing.com/?wlexpsignin=1':
-        currenturl = chrome.current_url
-    else:
-        while count <= searches_to_make:
-            search = random.choice(search_list)
-            auto_search(search)
-            time.sleep(2)
-            count += 1
-        print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing the browser automatically in 10 seconds.')
-        time.sleep(10)
-        chrome.quit()
-        count = 0
-        currenturl = ''
+    global count, search_list
+    chrome.get('https://www.bing.com/')
+    while count <= searches_to_make:
+        search = random.choice(search_list)
+        auto_search(search)
+        time.sleep(2)
+        count += 1
+    print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing the browser automatically in 10 seconds.')
+    time.sleep(10)
+    chrome.quit()
+    count = 0
 
 
 create_list()
 edge()
 
 #browser('desktop')
-#time.sleep(2)
 #login('desktop')
 #check_url()
 
-browser('mobile')
-time.sleep(3)
-login('mobile')
-check_url()
+#browser('mobile')
+#time.sleep(3)
+#login('mobile')
+#check_url()
 

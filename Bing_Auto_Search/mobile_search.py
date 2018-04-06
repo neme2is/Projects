@@ -65,3 +65,12 @@ else:
     print('Your ' + str(searches_to_make) + ' random searches are done.\nClosing the browser automatically in 10 seconds.')
     time.sleep(10)
     chrome.quit()
+
+
+
+list = [
+
+
+
+
+]
